@@ -1,9 +1,7 @@
 #pragma once
 #include "detail/draft-07-schema.hpp"
 
-// XXX fix for https://github.com/taocpp/json/issues/83
 #include <tao/json.hpp>
-#define TAO_PEGTL_DEMANGLE_HPP
 #include <isto/uri/uri.hpp>
 
 #include <fmt/ranges.h>
