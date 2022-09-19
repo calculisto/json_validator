@@ -20,7 +20,7 @@ fmt::formatter <tao::json::value>
 {
         template <typename FormatContext>
         auto 
-    format (const tao::json::value& v, FormatContext &ctx) 
+    format (const tao::json::value& v, FormatContext &ctx) const
     {
         return formatter <std::string>::format (tao::json::to_string (v), ctx);
     }
@@ -32,7 +32,7 @@ fmt::formatter <tao::json::type>
 {
         template <typename FormatContext>
         auto 
-    format (const tao::json::type& t, FormatContext &ctx) 
+    format (const tao::json::type& t, FormatContext &ctx) const
     {
         return formatter <std::string>::format (tao::json::to_string (t), ctx);
     }
@@ -663,7 +663,7 @@ private:
                 {
                     report (
                          "/type"
-                        , format (
+                        , fmt::format (
                               "Type mismatch, schema requires one of {}, instance is \"{}\""
                             , it->second.get_array ()
                             , tao::json::to_string (instance.type ())
