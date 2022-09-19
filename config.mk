@@ -1,5 +1,3 @@
-FMTLIB_HEADERS=../../external/fmtlib/fmt/include
-FMTLIB_LIBRARY=../../external/fmtlib/fmt/build
 DOCTEST_HEADERS=../../external/onqtam/doctest
 DEPENDENCIES_HEADERS=                   \
 	../../external/isto/uri/include     \
@@ -9,6 +7,6 @@ DEPENDENCIES_HEADERS=                   \
 PROJECT=json_validator
 LINK.o=${LINK.cc}
 CXXFLAGS+=-std=c++2a -Wall -Wextra -I../${FMTLIB_HEADERS} $(foreach dir, ${DEPENDENCIES_HEADERS}, -I../${dir})
-LDFLAGS+= -L../${FMTLIB_LIBRARY}
+LDFLAGS+=
 LDLIBS+= -lfmt
 
