@@ -1281,6 +1281,7 @@ public:
         last_schema_m = add_schema_impl (std::move (json), document_uri);
     }
 
+        [[nodiscard]]
         auto
     validate (const instance_t& instance, std::string const& schema_uri = "")
         -> std::pair <bool, json_t>
@@ -1304,8 +1305,9 @@ public:
         throw std::runtime_error {"schema not found"};
     }
 
-        std::pair <bool, json_t>
+        auto
     validate_schema (const schema_t& schema)
+        -> std::pair <bool, json_t>
     {
         return validate_impl (
               schema
