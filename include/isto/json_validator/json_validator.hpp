@@ -5,7 +5,6 @@
 #include <isto/uri/uri.hpp>
 
 #include <fmt/ranges.h>
-    using fmt::format;
 
 #include <regex>
 #include <unordered_map>
@@ -178,7 +177,7 @@ private:
             }
             catch (std::exception const& e)
             {
-                throw (std::runtime_error { format (
+                throw (std::runtime_error { fmt::format (
                       "{}:{}: Resolution of pointer {} in schema {} failed: {}."
                     , __FILE__
                     , __LINE__
@@ -188,7 +187,7 @@ private:
                 )});
             }      
         }
-        throw (std::runtime_error { format (
+        throw (std::runtime_error { fmt::format (
               "Couldn't resolve reference {}."
             , target.string ()
         )});
@@ -216,7 +215,7 @@ private:
         if (schema.is_boolean ()) return; 
         if (!schema.is_object ())
         {
-            throw (std::runtime_error { format (
+            throw (std::runtime_error { fmt::format (
                   "{}:{}: Schema \"{}\" is not an object."
                 , __FILE__
                 , __LINE__
@@ -433,7 +432,7 @@ private:
             }
             else
             {
-                throw (std::runtime_error { format (
+                throw (std::runtime_error { fmt::format (
                       "Resolution of reference \"{}\" failed."
                     , ref.get_string ()
                 )});
@@ -458,7 +457,7 @@ private:
                           instance
                         , instance_location
                         , sub_schema
-                        , schema_location + format ("/allOf/{}", index)
+                        , schema_location + fmt::format ("/allOf/{}", index)
                       )
                       ; !is_valid
                 ){
@@ -472,7 +471,7 @@ private:
             {
                 report (
                       "/allof"
-                    , format ("not all sub-schemas validate the instance: ", failures)
+                    , fmt::format ("not all sub-schemas validate the instance: ", failures)
                     , sub_errors
                 );
             }
@@ -491,7 +490,7 @@ private:
                       instance
                     , instance_location
                     , sub_schema
-                    , schema_location + format ("/anyOf/{}", index)
+                    , schema_location + fmt::format ("/anyOf/{}", index)
                 );
                 if (is_any_valid){
                     break;
@@ -523,7 +522,7 @@ private:
                       instance
                     , instance_location
                     , sub_schema
-                    , schema_location + format ("/oneOf/{}", index)
+                    , schema_location + fmt::format ("/oneOf/{}", index)
                 );
                 if (is_valid){
                     successes.push_back (index);
@@ -540,7 +539,7 @@ private:
                       "/oneOf"
                     , successes.size () == 0 
                         ? "No sub-schema validate the instance" 
-                        : format (
+                        : fmt::format (
                               "More than one sub-schema validate the instance: {}" 
                             , successes
                           )
@@ -641,7 +640,7 @@ private:
                 {
                     report (
                           "/type"
-                        , format (
+                        , fmt::format (
                               "Type mismatch, schema requires {}, got {}" 
                             , it->second.get_string ()
                             , tao::json::to_string (instance.type ())
@@ -735,7 +734,7 @@ private:
                                       instance
                                     , instance_location
                                     , x
-                                    , schema_location + format ("/dependencies/{}", property)
+                                    , schema_location + fmt::format ("/dependencies/{}", property)
                                   )
                                 ; !is_valid
                             ){
@@ -751,7 +750,7 @@ private:
                 {
                     report (
                           "/dependencies"
-                        , format ("not all dependencies validate the instance: ", failures)
+                        , fmt::format ("not all dependencies validate the instance: ", failures)
                         , sub_errors
                     );
                 }
@@ -775,7 +774,7 @@ private:
                                   instance
                                 , instance_location
                                 , sub_schema
-                                , schema_location + format ("/dependentSchemas/{}", property)
+                                , schema_location + fmt::format ("/dependentSchemas/{}", property)
                               )
                             ; !is_valid
                         ){
@@ -789,7 +788,7 @@ private:
                 {
                     report (
                           "/dependentSchemas"
-                        , format ("not all dependent sub-schemas validate the instance: ", failures)
+                        , fmt::format ("not all dependent sub-schemas validate the instance: ", failures)
                         , sub_errors
                     );
                 }
@@ -932,8 +931,8 @@ private:
                     if (instance_object.count (property) == 0)
                     {
                         report (
-                              format ("/required/{}", index)
-                            , format ("Missing required property \"{}\"", property)
+                              fmt::format ("/required/{}", index)
+                            , fmt::format ("Missing required property \"{}\"", property)
                         );
                     }
                     ++index;
@@ -959,7 +958,7 @@ private:
                             {
                                 report (
                                       "/dependentRequired"
-                                    , format ("Missing property \"{}\", required by the presence of \"{}\"", dependent_property, property)
+                                    , fmt::format ("Missing property \"{}\", required by the presence of \"{}\"", dependent_property, property)
                                 );
                             }
                         }
@@ -996,9 +995,9 @@ private:
                                 auto&&
                               [is_valid, e] = validate_impl (
                                   instance_array[index]
-                                , instance_location + format ("/{}", index)
+                                , instance_location + fmt::format ("/{}", index)
                                 , schema_array[index]
-                                , schema_location + format ("/items/{}", index)
+                                , schema_location + fmt::format ("/items/{}", index)
                               )
                             ; !is_valid
                         ){
@@ -1016,9 +1015,9 @@ private:
                                 auto&&
                               [is_valid, e] = validate_impl (
                                   instance_array[index]
-                                , instance_location + "/" + format ("{}", index)
+                                , instance_location + "/" + fmt::format ("{}", index)
                                 , it->second
-                                , schema_location + format ("/items")
+                                , schema_location + fmt::format ("/items")
                               )
                             ; !is_valid
                         ){
@@ -1032,7 +1031,7 @@ private:
                 {
                     report (
                           "/items"
-                        , format ("Not all dependent sub-schemas validate the instance: ", failures)
+                        , fmt::format ("Not all dependent sub-schemas validate the instance: ", failures)
                         , sub_errors
                     );
                 }
@@ -1048,9 +1047,9 @@ private:
                                 auto&&
                               [is_valid, e] = validate_impl (
                                   instance_array[index]
-                                , instance_location + "/" + format ("{}", index)
+                                , instance_location + "/" + fmt::format ("{}", index)
                                 , it->second
-                                , schema_location + format ("additionalItems")
+                                , schema_location + fmt::format ("additionalItems")
                               )
                             ; !is_valid
                         ){
@@ -1063,7 +1062,7 @@ private:
                     {
                         report (
                               "/additionalItems"
-                            , format ("Not all dependent sub-schemas validate the instance: ", failures)
+                            , fmt::format ("Not all dependent sub-schemas validate the instance: ", failures)
                             , sub_errors
                         );
                     }
@@ -1085,9 +1084,9 @@ private:
                             auto&&
                           [is_valid, e] = validate_impl (
                               instance_array[index]
-                            , instance_location + format ("/{}", index)
+                            , instance_location + fmt::format ("/{}", index)
                             , it->second
-                            , schema_location + format ("/items/{}", index)
+                            , schema_location + fmt::format ("/items/{}", index)
                           )
                         ; is_valid
                     ){
