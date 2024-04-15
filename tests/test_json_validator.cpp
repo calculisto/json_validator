@@ -1,6 +1,6 @@
 #include <doctest/doctest.h>
-#include "../include/isto/json_validator/json_validator.hpp"
-    using namespace isto::json_validator;
+#include "../include/calculisto/json_validator/json_validator.hpp"
+    using namespace calculisto::json_validator;
 #include <filesystem>
     namespace fs = std::filesystem;
     using namespace std::literals;

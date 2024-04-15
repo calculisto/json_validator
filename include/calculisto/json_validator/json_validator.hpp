@@ -2,7 +2,7 @@
 #include "detail/draft-07-schema.hpp"
 
 #include <tao/json.hpp>
-#include <isto/uri/uri.hpp>
+#include <calculisto/uri/uri.hpp>
 
 #include <fmt/ranges.h>
 
@@ -38,7 +38,7 @@ fmt::formatter <tao::json::type>
 };
 
     namespace 
-isto::json_validator
+calculisto::json_validator
 {
     using
 json_t = tao::json::value;
@@ -47,7 +47,7 @@ schema_t = json_t;
     using
 instance_t = json_t;
     using
-uri_t = isto::uri::uri_t;
+uri_t = calculisto::uri::uri_t;
 
     namespace
 detail // {{{
@@ -1317,4 +1317,4 @@ public:
     }
 };
 
-} // namespace isto::json_validator
+} // namespace calculisto::json_validator

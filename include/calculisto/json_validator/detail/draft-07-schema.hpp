@@ -1,5 +1,5 @@
 #pragma once
-    namespace isto::json_validator::detail
+    namespace calculisto::json_validator::detail
 {
 
 // https://json-schema.org/draft-07/hyper-schema
@@ -174,4 +174,4 @@ draft_07_schema = R"(
     "default": true
 }
 )";
-} // namespace isto::json_validator::detail
+} // namespace calculisto::json_validator::detail

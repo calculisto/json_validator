@@ -1,6 +1,6 @@
 DOCTEST_HEADERS=../../external/onqtam/doctest
 DEPENDENCIES_HEADERS=                   \
-	../../external/isto/uri/include     \
+	../../external/calculisto/uri/include     \
 	../../external/taocpp/pegtl/include \
 	../../external/taocpp/json/include
 
